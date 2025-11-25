@@ -1,0 +1,10 @@
+# Binaries
+tv-bot
+*.exe
+
+# Env file
+.env
+
+# IDE settings
+.vscode/
+.idea/
