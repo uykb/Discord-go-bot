@@ -15,7 +15,9 @@ type Config struct {
 
 // LoadConfig reads configuration from file or environment variables.
 func LoadConfig(path string) (config Config, err error) {
-	viper.AddConfigPath(path)
+	if path != "" {
+		viper.AddConfigPath(path)
+	}
 	viper.SetConfigName("app")
 	viper.SetConfigType("env") // or yaml, json etc.
 
