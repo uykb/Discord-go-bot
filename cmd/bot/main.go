@@ -23,8 +23,8 @@ func main() {
 		return
 	}
 
-	if cfg.DiscordToken == "" || cfg.AIAPIKey == "" || cfg.GuildID == "" {
-		fmt.Println("Error: DISCORD_BOT_TOKEN, DEEPSEEK_API_KEY, and DISCORD_GUILD_ID must be set.")
+	if cfg.DiscordToken == "" || cfg.AIAPIKey == "" {
+		fmt.Println("Error: DISCORD_BOT_TOKEN and DEEPSEEK_API_KEY must be set.")
 		return
 	}
 
@@ -42,7 +42,7 @@ func main() {
 	aiService := ai.NewService(cfg.AIAPIKey, cfg.AIEndpoint)
 
 	// Create and start the bot
-	app := bot.NewBot(dg, marketService, analysisService, aiService, cfg.GuildID)
+	app := bot.NewBot(dg, marketService, analysisService, aiService)
 	if err := app.Start(); err != nil {
 		fmt.Println("Error starting bot:", err)
 		return

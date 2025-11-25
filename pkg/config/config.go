@@ -17,7 +17,6 @@ type Config struct {
 func LoadConfig(path string) (config Config, err error) {
 	// Bind to environment variables. These keys match the `mapstructure` tags.
 	viper.BindEnv("DISCORD_BOT_TOKEN")
-	viper.BindEnv("DISCORD_GUILD_ID")
 	viper.BindEnv("DEEPSEEK_API_KEY")
 	viper.BindEnv("AI_ENDPOINT")
 

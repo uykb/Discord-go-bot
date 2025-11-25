@@ -22,13 +22,12 @@ type Bot struct {
 }
 
 // NewBot creates a new Bot instance.
-func NewBot(s *discordgo.Session, marketSvc *market.Service, analysisSvc *analysis.Service, aiSvc *ai.Service, guildID string) *Bot {
+func NewBot(s *discordgo.Session, marketSvc *market.Service, analysisSvc *analysis.Service, aiSvc *ai.Service) *Bot {
 	return &Bot{
 		Session:         s,
 		MarketService:   marketSvc,
 		AnalysisService: analysisSvc,
 		AIService:       aiSvc,
-		GuildID:         guildID,
 	}
 }
 
@@ -43,9 +42,9 @@ func (b *Bot) Start() error {
 // Stop gracefully shuts down the bot.
 func (b *Bot) Stop() {
 	// Clean up registered commands
-	registeredCommands, _ := b.Session.ApplicationCommands(b.Session.State.User.ID, b.GuildID)
+	registeredCommands, _ := b.Session.ApplicationCommands(b.Session.State.User.ID, "")
 	for _, v := range registeredCommands {
-		b.Session.ApplicationCommandDelete(b.Session.State.User.ID, b.GuildID, v.ID)
+		b.Session.ApplicationCommandDelete(b.Session.State.User.ID, "", v.ID)
 	}
 	b.Session.Close()
 }
