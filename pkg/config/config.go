@@ -15,22 +15,28 @@ type Config struct {
 
 // LoadConfig reads configuration from file or environment variables.
 func LoadConfig(path string) (config Config, err error) {
+	// Bind to environment variables. These keys match the `mapstructure` tags.
+	viper.BindEnv("DISCORD_BOT_TOKEN")
+	viper.BindEnv("DISCORD_GUILD_ID")
+	viper.BindEnv("DEEPSEEK_API_KEY")
+	viper.BindEnv("AI_ENDPOINT")
+
+	// If a path is provided (for local dev), also read from a config file.
+	// Environment variables will take precedence.
 	if path != "" {
 		viper.AddConfigPath(path)
-	}
-	viper.SetConfigName("app")
-	viper.SetConfigType("env") // or yaml, json etc.
+		viper.SetConfigName("app")
+		viper.SetConfigType("env")
 
-	viper.AutomaticEnv()
-
-	if err = viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			// Config file was found but another error was produced
-			return
+		if errRead := viper.ReadInConfig(); errRead != nil {
+			if _, ok := errRead.(viper.ConfigFileNotFoundError); !ok {
+				// A file was found but there was a different error.
+				return config, errRead
+			}
 		}
-		// Config file not found; ignore error if desired
 	}
 
+	// Unmarshal all settings into the Config struct.
 	err = viper.Unmarshal(&config)
 	return
 }
