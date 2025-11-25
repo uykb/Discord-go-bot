@@ -88,6 +88,11 @@ func (b *Bot) handleAnalyzeCommand(s *discordgo.Session, i *discordgo.Interactio
 	options := i.ApplicationCommandData().Options
 	symbol := strings.ToUpper(options[0].Value.(string))
 
+	// Default to USDT pair if not specified
+	if !strings.Contains(symbol, "USDT") {
+		symbol += "USDT"
+	}
+
 	// 1. Fetch Market Data
 	marketData, err := b.MarketService.FetchMarketData(context.Background(), symbol)
 	if err != nil {
