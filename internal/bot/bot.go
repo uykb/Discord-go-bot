@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 	"tv-bot-go/internal/ai"
 	"tv-bot-go/internal/analysis"
 	"tv-bot-go/internal/market"
@@ -111,7 +112,7 @@ func (b *Bot) handleAnalyzeCommand(s *discordgo.Session, i *discordgo.Interactio
 		Title:       fmt.Sprintf("Analysis for %s", symbol),
 		Description: aiSummary,
 		Color:       0x0099ff, // Blue
-		Timestamp:   i.Interaction.Message.Timestamp,
+		Timestamp:   time.Now().UTC().Format(time.RFC3339),
 	}
 
 	s.InteractionResponseEdit(i.Interaction, &discordgo.WebhookEdit{
