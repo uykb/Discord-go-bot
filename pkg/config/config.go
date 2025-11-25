@@ -19,7 +19,7 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.BindEnv("DISCORD_BOT_TOKEN")
 	viper.BindEnv("DEEPSEEK_API_KEY")
 	viper.SetDefault("AI_ENDPOINT", "https://api.deepseek.com/chat/completions")
-	vipher.BindEnv("AI_ENDPOINT")
+	viper.BindEnv("AI_ENDPOINT")
 
 	// If a path is provided (for local dev), also read from a config file.
 	// Environment variables will take precedence.
