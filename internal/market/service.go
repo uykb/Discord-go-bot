@@ -5,7 +5,8 @@ import (
 	"tv-bot-go/internal/binance"
 )
 
-// Service provides market data and analysis.	ype Service struct {
+// Service provides market data and analysis.
+type Service struct {
 	binanceClient *binance.Client
 }
 
